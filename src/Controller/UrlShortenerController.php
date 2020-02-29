@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Url;
-use App\Service\Shorter;
+use App\Service\Shortener;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class UrlSorterController extends AbstractController
+class UrlShortenerController extends AbstractController
 {
     private $validator;
 
@@ -24,11 +24,11 @@ class UrlSorterController extends AbstractController
     /**
      * @Route("/short", name="short")
      * @param Request $request
-     * @param Shorter $shorter
+     * @param Shortener $shorter
      * @return JsonResponse
      * @throws Exception
      */
-    public function short(Request $request, Shorter $shorter): JsonResponse
+    public function short(Request $request, Shortener $shorter): JsonResponse
     {
         $url = new Url($request->get('url'));
 

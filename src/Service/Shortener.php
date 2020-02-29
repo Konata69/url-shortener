@@ -6,7 +6,7 @@ use App\Entity\Url;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
-class Shorter
+class Shortener
 {
     private $em;
     private $rep;
