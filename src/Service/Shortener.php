@@ -42,6 +42,17 @@ class Shortener
         return $urlEntity;
     }
 
+    public function getUrlByHash($hash): ?string
+    {
+        $urlEntity = $this->rep->findOneBy(['hash' => $hash]);
+
+        if ($urlEntity) {
+            return $urlEntity->getUrl();
+        }
+
+        return null;
+    }
+
     /**
      * @return string
      * @throws Exception
