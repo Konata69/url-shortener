@@ -22,6 +22,13 @@ final class UserDTO
         $this->password = $password;
     }
 
+    public static function fromJson(string $json): self
+    {
+        $data = json_decode($json, false);
+
+        return new static($data->email, $data->password);
+    }
+
     public function getEmail(): string
     {
         return $this->email;
