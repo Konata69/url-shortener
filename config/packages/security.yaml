@@ -20,6 +20,8 @@ security:
                 check_path: /auth/login
             logout:
                 path: logout
+                # TODO remove redirect after logout
+                # success_handler: ...
 #            provider: users_in_memory
 
             # activate different ways to authenticate
