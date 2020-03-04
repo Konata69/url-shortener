@@ -50,6 +50,21 @@ class AuthController extends AbstractController
         return new JsonResponse($userView->asArray());
     }
 
+    /**
+     * @Route("/auth/login", name="login", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function login(Request $request): JsonResponse
+    {
+        $user = $this->getUser();
+
+        return $this->json([
+            'username' => $user->getUsername(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
     private function validate($dto): ?JsonResponse
     {
         $errors = $this->validator->validate($dto);
