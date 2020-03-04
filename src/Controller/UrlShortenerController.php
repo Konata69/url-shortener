@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Url;
+use App\DTO\UrlDTO;
 use App\Service\Shortener;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,17 +32,17 @@ class UrlShortenerController extends AbstractController
      */
     public function short(Request $request, Shortener $shorter): JsonResponse
     {
-        $url = new Url($request->get('url'));
+        $dto = new UrlDTO($request->get('url'));
 
-        if ($errors = $this->validate($url)) {
+        if ($errors = $this->validate($dto)) {
             return $errors;
         }
 
-        $url = $shorter->short($url->getUrl());
+        $url = $shorter->short($dto->getUrl());
 
-        $this->generateUrl('short', []);
+        $urlString = $this->generateUrl('follow', ['hash' => $url->getHash()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return new JsonResponse(['hash' => $url->getHash()]);
+        return new JsonResponse(['url' => $urlString]);
     }
 
     /**
@@ -61,9 +62,9 @@ class UrlShortenerController extends AbstractController
         return new RedirectResponse($url);
     }
 
-    private function validate(Url $url): ?JsonResponse
+    private function validate($dto): ?JsonResponse
     {
-        $errors = $this->validator->validate($url);
+        $errors = $this->validator->validate($dto);
 
         if (count($errors->getIterator()) > 0) {
             $errorResponse = [];
