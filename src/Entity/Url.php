@@ -30,6 +30,11 @@ class Url
      */
     private $hash;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="urls")
+     */
+    private $user;
+
     public function __construct(string $url)
     {
         $this->url = $url;
@@ -48,5 +53,17 @@ class Url
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
