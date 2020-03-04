@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\UserDTO;
 use App\Service\AuthInterface;
 use App\View\UserView;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,6 +64,15 @@ class AuthController extends AbstractController
             'username' => $user->getUsername(),
             'roles' => $user->getRoles(),
         ]);
+    }
+
+    /**
+     * @Route("/auth/logout", name="logout", methods={"GET"})
+     */
+    public function logout(): void
+    {
+        // controller can be blank: it will never be executed!
+        throw new RuntimeException('Don\'t forget to activate logout in security.yaml');
     }
 
     private function validate($dto): ?JsonResponse

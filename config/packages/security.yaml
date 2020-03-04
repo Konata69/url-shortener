@@ -18,6 +18,8 @@ security:
             anonymous: lazy
             json_login:
                 check_path: /auth/login
+            logout:
+                path: logout
 #            provider: users_in_memory
 
             # activate different ways to authenticate
