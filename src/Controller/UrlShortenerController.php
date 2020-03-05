@@ -40,6 +40,10 @@ class UrlShortenerController extends AbstractController
 
         $url = $shorter->short($dto->getUrl());
 
+        if ($user = $this->getUser()) {
+            $url->setUser($user);
+        }
+
         $urlString = $this->generateUrl('follow', ['hash' => $url->getHash()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return new JsonResponse(['url' => $urlString]);
