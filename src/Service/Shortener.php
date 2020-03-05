@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\UrlDTO;
 use App\Entity\Url;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -20,13 +21,13 @@ class Shortener
     }
 
     /**
-     * @param string $url
+     * @param UrlDTO $dto
      * @return Url
      * @throws Exception
      */
-    public function short(string $url): Url
+    public function short(UrlDTO $dto): Url
     {
-        $urlEntity = $this->rep->findOneBy(['url' => $url]);
+        $urlEntity = $this->rep->findOneBy(['url' => $dto->getUrl()]);
 
         if ($urlEntity) {
             return $urlEntity;
@@ -34,7 +35,8 @@ class Shortener
 
         $hash = $this->generateHash();
 
-        $urlEntity = new Url($url);
+        $urlEntity = new Url($dto->getUrl());
+        $urlEntity->setUser($dto->getUser());
         $urlEntity->setHash($hash);
         $this->em->persist($urlEntity);
         $this->em->flush();
