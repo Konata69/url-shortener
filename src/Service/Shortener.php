@@ -64,6 +64,13 @@ class Shortener
         return $this->router->generate('follow', ['hash' => $hash], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
+    public function delete(int $id): void
+    {
+        $urlEntity = $this->rep->find($id);
+        $this->em->remove($urlEntity);
+        $this->em->flush();
+    }
+
     /**
      * @return string
      * @throws Exception

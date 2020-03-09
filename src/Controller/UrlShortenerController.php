@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -69,6 +68,7 @@ class UrlShortenerController extends AbstractController
      */
     public function list(UserUrlsView $view): JsonResponse
     {
+        //TODO Чем заменить ограничение неаутентифицированных пользователей?
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'You should be authenticated!');
 
         $urls = ($this->getUser())->getUrls();
@@ -76,6 +76,23 @@ class UrlShortenerController extends AbstractController
         $view->setUrls($urls);
 
         return new JsonResponse($view->asArray());
+    }
+
+    /**
+     * @Route("/short/delete/{id}", name="short_delete")
+     * @param int $id
+     * @param Shortener $shortener
+     * @return JsonResponse
+     */
+    public function delete(int $id, Shortener $shortener): JsonResponse
+    {
+        //TODO Чем заменить ограничение неаутентифицированных пользователей?
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'You should be authenticated!');
+
+        //TODO Обработать возможные ошибки (403/404)
+        $shortener->delete($id);
+
+        return new JsonResponse(['is_delete' => 'true']);
     }
 
     private function validate($dto): ?JsonResponse
