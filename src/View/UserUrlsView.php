@@ -22,6 +22,7 @@ class UserUrlsView
         /** @var Url $url */
         foreach ($this->urls as $url) {
             $result[] = [
+                'id' => $url->getId(),
                 'url' => $url->getUrl(),
                 'shortUrl' => $this->shortener->getFollowUrl($url->getHash()),
             ];

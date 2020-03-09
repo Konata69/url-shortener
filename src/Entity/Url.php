@@ -67,4 +67,9 @@ class Url
 
         return $this;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
