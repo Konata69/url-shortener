@@ -32,7 +32,7 @@ class Url
     private $hash;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="urls")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="url")
      */
     private $user;
 

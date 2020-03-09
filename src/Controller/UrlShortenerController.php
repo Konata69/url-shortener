@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DTO\UrlDTO;
 use App\Service\Shortener;
+use App\View\UserUrlsView;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,6 +60,22 @@ class UrlShortenerController extends AbstractController
         }
 
         return new RedirectResponse($url);
+    }
+
+    /**
+     * @Route("/short/list", name="short_list")
+     * @param UserUrlsView $view
+     * @return JsonResponse
+     */
+    public function list(UserUrlsView $view): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'You should be authenticated!');
+
+        $urls = ($this->getUser())->getUrls();
+
+        $view->setUrls($urls);
+
+        return new JsonResponse($view->asArray());
     }
 
     private function validate($dto): ?JsonResponse
