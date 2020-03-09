@@ -26,11 +26,11 @@ class UrlShortenerController extends AbstractController
     /**
      * @Route("/short", name="short")
      * @param Request $request
-     * @param Shortener $shorter
+     * @param Shortener $shortener
      * @return JsonResponse
      * @throws Exception
      */
-    public function short(Request $request, Shortener $shorter): JsonResponse
+    public function short(Request $request, Shortener $shortener): JsonResponse
     {
         $dto = new UrlDTO($request->get('url'), $this->getUser());
 
@@ -38,9 +38,8 @@ class UrlShortenerController extends AbstractController
             return $errors;
         }
 
-        $url = $shorter->short($dto);
-
-        $urlString = $this->generateUrl('follow', ['hash' => $url->getHash()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $shortener->short($dto);
+        $urlString = $shortener->getFollowUrl($url->getHash());
 
         return new JsonResponse(['url' => $urlString]);
     }

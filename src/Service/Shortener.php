@@ -6,18 +6,21 @@ use App\DTO\UrlDTO;
 use App\Entity\Url;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Shortener
 {
     private $em;
     private $rep;
     private $rand;
+    private $router;
 
-    public function __construct(EntityManagerInterface $em, RandomStringInterface $rand)
+    public function __construct(EntityManagerInterface $em, RandomStringInterface $rand, UrlGeneratorInterface $router)
     {
         $this->em = $em;
         $this->rep = $em->getRepository(Url::class);
         $this->rand = $rand;
+        $this->router = $router;
     }
 
     /**
@@ -54,6 +57,11 @@ class Shortener
         }
 
         return null;
+    }
+
+    public function getFollowUrl($hash): string
+    {
+        return $this->router->generate('follow', ['hash' => $hash], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     /**
