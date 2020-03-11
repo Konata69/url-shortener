@@ -4,9 +4,12 @@ namespace App\Service;
 
 use App\DTO\UrlDTO;
 use App\Entity\Url;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Exception;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class Shortener
 {
@@ -64,10 +67,25 @@ class Shortener
         return $this->router->generate('follow', ['hash' => $hash], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    public function delete(int $id): void
+    /**
+     * @param int $id
+     * @param User $user
+     * @throws EntityNotFoundException
+     * @throws AccessDeniedException
+     */
+    public function delete(int $id, User $user): void
     {
-        $urlEntity = $this->rep->find($id);
-        $this->em->remove($urlEntity);
+        $url = $this->rep->find($id);
+
+        if ($url === null) {
+            throw new EntityNotFoundException('Url not found');
+        }
+
+        if (!$user->hasUrl($url)) {
+            throw new AccessDeniedException('User not allowed to delete this url');
+        }
+
+        $this->em->remove($url);
         $this->em->flush();
     }
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\UrlDTO;
+use App\Entity\User;
 use App\Service\Shortener;
 use App\View\UserUrlsView;
 use Exception;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Throwable;
 
 class UrlShortenerController extends AbstractController
 {
@@ -89,8 +91,14 @@ class UrlShortenerController extends AbstractController
         //TODO Чем заменить ограничение неаутентифицированных пользователей?
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'You should be authenticated!');
 
-        //TODO Обработать возможные ошибки (403/404)
-        $shortener->delete($id);
+        /** @var User $user */
+        $user = $this->getUser();
+
+        try {
+            $shortener->delete($id, $user);
+        } catch (Throwable $e) {
+            return new JsonResponse(['error' => $e->getMessage()]);
+        }
 
         return new JsonResponse(['is_delete' => 'true']);
     }
