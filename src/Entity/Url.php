@@ -72,4 +72,9 @@ class Url
     {
         return $this->id;
     }
+
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
 }
