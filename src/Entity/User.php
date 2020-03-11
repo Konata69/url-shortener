@@ -153,4 +153,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function hasUrl(Url $url): bool
+    {
+        return $this->urls->contains($url);
+    }
 }
