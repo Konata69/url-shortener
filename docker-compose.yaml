@@ -1,5 +1,16 @@
 version: "3.7"
 
 services:
-  php:
+  nginx:
+    image: nginx:1.17
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/config:/etc/nginx/conf.d/
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - php-prod
+
+  php-fpm:
     build: .
