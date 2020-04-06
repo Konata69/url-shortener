@@ -11,3 +11,5 @@
 ###< symfony/framework-bundle ###
 
 /.idea
+
+/docker/dbdata
