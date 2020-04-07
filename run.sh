@@ -1,7 +1,13 @@
 #!/bin/bash
 echo "Start deploy..."
 
-docker-compose up -d --build
+echo "Docker compose up..."
+docker-compose up -d
 
-docker-compose exec php-fpm php bin/console doctrine:migrations:migrate
+echo "Composer install..."
+docker-compose run php-fpm composer install
 
+echo "Run db migrations..."
+docker-compose run php-fpm php bin/console doctrine:migrations:migrate
+
+echo "Done"

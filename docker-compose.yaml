@@ -29,5 +29,7 @@ services:
 
   php-fpm:
     build: .
+    volumes:
+      - .:/var/www/html
     links:
       - db
