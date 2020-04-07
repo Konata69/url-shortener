@@ -11,6 +11,9 @@ services:
       - 33060:33060
       - 3306:3306
     environment:
+      MYSQL_DATABASE: url_shortener
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
 
   nginx:
