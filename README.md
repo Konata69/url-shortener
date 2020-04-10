@@ -1,0 +1,1 @@
+Don't use it in production because of .env under git
