@@ -10,4 +10,10 @@ docker-compose run php-fpm composer install
 echo "Run db migrations..."
 docker-compose run php-fpm php bin/console doctrine:migrations:migrate
 
+echo "Create test db..."
+docker-compose run -e APP_ENV=test php-fpm php bin/console doctrine:database:create
+
+echo "Run test db migrations..."
+docker-compose run -e APP_ENV=test php-fpm php bin/console doctrine:migrations:migrate
+
 echo "Done"
