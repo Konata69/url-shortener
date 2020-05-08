@@ -33,6 +33,7 @@ class Shortener
      */
     public function short(UrlDTO $dto): Url
     {
+        /** @var Url $urlEntity */
         $urlEntity = $this->rep->findOneBy(['url' => $dto->getUrl()]);
 
         if ($urlEntity) {
@@ -75,6 +76,7 @@ class Shortener
      */
     public function delete(int $id, User $user): void
     {
+        /** @var Url $url */
         $url = $this->rep->find($id);
 
         if ($url === null) {
