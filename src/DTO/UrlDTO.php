@@ -26,7 +26,7 @@ final class UrlDTO
         return $this->url;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
