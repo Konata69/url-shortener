@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UrlRepository")
  * @ORM\Table(name="url",
  *     uniqueConstraints={
  *          @ORM\UniqueConstraint(name="url_idx", columns={"url"})

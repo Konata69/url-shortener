@@ -51,16 +51,9 @@ class Shortener
         return $urlEntity;
     }
 
-    //TODO Переместить в репозиторий
     public function getUrlByHash($hash): ?string
     {
-        $urlEntity = $this->rep->findOneBy(['hash' => $hash]);
-
-        if ($urlEntity) {
-            return $urlEntity->getUrl();
-        }
-
-        return null;
+        return $this->rep->getUrlByHash($hash);
     }
 
     public function getFollowUrl($hash): string
