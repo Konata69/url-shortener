@@ -1,0 +1,66 @@
+openapi: 3.0.1
+info:
+  title: Shortener API
+  description: API description in Markdown.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost'
+paths:
+  /{hash}:
+    get:
+      description: Follow short url
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Hash to get full url and redirect
+      responses:
+        '302':
+          description: Redirect to url
+        '404':
+          description: Not Found
+  /short:
+    get:
+      description: Generate short url
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+            description: Full url to generate short url
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Url'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+components:
+  schemas:
+    Url:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Short url
+          example: 'http://localhost/abcdefgh'
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: 'Invalid parameter example_param'
+        value:
+          type: string
+          description: Invalid value
+          example: '123'
