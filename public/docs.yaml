@@ -62,6 +62,7 @@ paths:
           schema:
             type: string
             description: Full url to generate short url
+            example: http://google.com
       responses:
         '200':
           description: OK
