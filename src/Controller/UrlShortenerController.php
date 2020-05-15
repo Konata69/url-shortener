@@ -26,7 +26,7 @@ class UrlShortenerController extends AbstractController
     }
 
     /**
-     * @Route("/short", name="short")
+     * @Route("/short", name="short", methods={"GET"})
      * @param Request $request
      * @param Shortener $shortener
      * @return JsonResponse
@@ -47,7 +47,7 @@ class UrlShortenerController extends AbstractController
     }
 
     /**
-     * @Route("/{hash}", name="follow")
+     * @Route("/{hash}", name="follow", methods={"GET"})
      * @param string $hash
      * @param Shortener $shortener
      * @return JsonResponse|RedirectResponse
@@ -64,7 +64,7 @@ class UrlShortenerController extends AbstractController
     }
 
     /**
-     * @Route("/short/list", name="short_list")
+     * @Route("/short/list", name="short_list", methods={"GET"})
      * @param UserUrlsView $view
      * @return JsonResponse
      */
@@ -81,7 +81,7 @@ class UrlShortenerController extends AbstractController
     }
 
     /**
-     * @Route("/short/delete/{id}", name="short_delete")
+     * @Route("/short/delete/{id}", name="short_delete", methods={"POST"})
      * @param int $id
      * @param Shortener $shortener
      * @return JsonResponse
