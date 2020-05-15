@@ -6,6 +6,37 @@ info:
 servers:
   - url: 'http://localhost'
 paths:
+  /auth/register:
+    post:
+      description: Register a new user
+      requestBody:
+        description: Email and password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: OK
+  /auth/login:
+    post:
+      description: Login
+      requestBody:
+        description: Email and password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: OK
+  /auth/logout:
+    get:
+      description: Logout
+      responses:
+        '200':
+          description: OK
+
   /{hash}:
     get:
       description: Follow short url
@@ -58,6 +89,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UrlEntity'
+  /short/delete/{id}:
+    post:
+      description: Delete user's short url by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: Url's id (should get from /short/list method)
+      responses:
+        '200':
+          description: OK
+
 components:
   schemas:
     Url:
@@ -92,3 +137,12 @@ components:
           type: string
           description: Invalid value
           example: '123'
+    Credentials:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'email@example.com'
+        password:
+          type: string
+          example: 'password'
