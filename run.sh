@@ -16,7 +16,7 @@ docker-compose run -e APP_ENV=test php-fpm php bin/console doctrine:database:cre
 echo "Run test db migrations..."
 docker-compose run -e APP_ENV=test php-fpm php bin/console doctrine:migrations:migrate
 
-#TODO add fixtures load
-#php bin/console doctrine:fixtures:load --env=test
+echo "Load fixtures for tests..."
+docker-compose run -e APP_ENV=test php-fpm php bin/console doctrine:fixtures:load
 
 echo "Done"
