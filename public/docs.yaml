@@ -43,13 +43,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationError'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationError'
+  /short/list:
+    get:
+      description: Get url list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UrlEntity'
 components:
   schemas:
     Url:
       type: object
       properties:
         url:
+          type: string
+          description: Short url
+          example: 'http://localhost/abcdefgh'
+    UrlEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        url:
+          type: string
+          description: Original url
+          example: 'http://example.com'
+        shortUrl:
           type: string
           description: Short url
           example: 'http://localhost/abcdefgh'
