@@ -18,6 +18,8 @@ security:
             anonymous: lazy
             json_login:
                 check_path: /auth/login
+                username_path: email
+                password_path: password
             logout:
                 path: logout
                 # TODO remove redirect after logout
