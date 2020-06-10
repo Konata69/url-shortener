@@ -12,7 +12,6 @@
 
 /.idea
 
-/docker/dbdata
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
