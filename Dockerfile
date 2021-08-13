@@ -9,3 +9,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Mysql pdo drivers
 RUN docker-php-ext-install pdo pdo_mysql
+
+#Install xdebug
+RUN pecl install xdebug-2.9.6 && docker-php-ext-enable xdebug

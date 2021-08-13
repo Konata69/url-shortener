@@ -42,6 +42,7 @@ class Shortener
 
         $hash = $this->generateHash();
 
+        //TODO: вынести в репозиторий
         $urlEntity = new Url($dto->getUrl());
         $urlEntity->setUser($dto->getUser());
         $urlEntity->setHash($hash);
